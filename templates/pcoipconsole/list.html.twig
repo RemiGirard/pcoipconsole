@@ -1,0 +1,126 @@
+{% extends 'pcoipconsole/home.html.twig' %}
+
+{% block stylesheets %}
+        {{ parent() }}
+
+        <link href="{{ asset('css/list.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}List and link{% endblock %}
+
+{% block body %}
+	{% include 'pcoipconsole/topbarWithConfiguration.html.twig' with {'title': 'List & link'} %}
+	<div>
+<div class='table'>
+	<div class='tr'>
+		<div class='td terminalSelected'>
+			<p>Client:</p>
+			<div id='selectedClient' data-terminalId=''>
+				<p>None</p>
+			</div>
+		</div>
+		<div class='td' style="background-color: black;">
+			<div class='noselect' id='changeHost'>Link devices</div>
+			<div class='noselect' id='updateConnectionInfo'>Update connnection info</div>
+		</div>
+		<div class='td terminalSelected'>
+		        <p>Host:</p>
+		        <div id='selectedHost' data-terminalId=''>
+		                <p>None</p>
+		        </div>
+		</div>
+	</div>
+	<div class='tr'>
+		<div id='client' class='td terminalTable' align="right">
+			<p class='terminal firstRow' align='right' data-terminalid='firstrow' data-terminalname='firstrow' data-terminalip='firstrow' data-connectedto='firstrow' data-connectionstate='firstrow' data-terminallabel='firstrow' data-connectedtolabel='firstrow'>
+				<span><span class="titlerow" data-filterBy="data-terminalname" data-rowtitle="name" style="display:inline-block;">name</span><img src="/pictures/triangle.png" alt="order" class="orderTerminals" data-orderBy="data-terminalname" data-orderinverse="false"></img></span>
+				<span><span class="titlerow" data-filterBy="data-terminallabel" data-rowtitle="label" style="display:inline-block;">label</span><img src="/pictures/triangle.png" alt="order" class="orderTerminals defaultterminalorder" data-orderBy="data-terminalLabel" data-orderinverse="false"></img></span>
+				<span><span class="titlerow" data-filterBy="data-terminalip" data-rowtitle="ip" style="display:inline-block;">ip</span><img src="/pictures/triangle.png" alt="order" class="orderTerminals" data-orderBy="data-terminalIp" data-orderinverse="false"></img></span>
+				<span><span class="titlerow" data-filterBy="data-connectedtolabel" data-rowtitle="connected to" style="display:inline-block;">connected to</span><img src="/pictures/triangle.png" alt="order" class="orderTerminals" data-orderBy="data-connectedtolabel" data-orderinverse="false"></img></span>
+				<span></span>
+				<span>state</span>
+			</p>
+			{% for terminal in clients %}
+				<p class='client terminal' data-terminalid='{{ terminal.id }}' data-terminalname='{{ terminal.name }}' data-terminalip='{{ terminal.ip }}' data-connectedto='{{ terminal.connectedTo }}' data-connectionstate='{{ terminal.connectionState }}' data-terminallabel='{{ terminal.label }}' data-connectedtolabel='{{ terminal.connectedToLabel }}'>
+					<span>{{ terminal.name |trim('mikros.int') }}</span>
+					<span>{{ terminal.label }}</span>
+					<span>{{ terminal.ip }}</span>
+					<span>{{ terminal.connectedToLabel |trim('mikros.int') }}</span>
+					<span>
+						<a href='{{ path('terminal_operate', {id: terminal.id}) }}'>operate</a>
+					</span>
+					<span class="connectionState">
+						{% if terminal.ping == 'true' %}
+							{% if terminal.logged == 'logged' %}
+								{% if terminal.connectionState == 'connected' %}
+									<span class="dot connected"></span>
+								{% else %}
+									<span class="dot free"></span>
+								{% endif %}
+							{% else %}
+								<span class="dot notlogged"></span>
+							{% endif %}
+						{% else %}
+							<span class="dot disconnected"></span>
+						{% endif %}					
+					</span>
+
+				</p>
+			{% else %}
+				<p><span>No clients</span></p>
+			{% endfor %}
+		</div>
+		<div class='td' id='orderbuttons'><div><img src="/pictures/triangle.png" alt="order" class="orderConnection" data-orderBy="#client"></img></div><div><img src="/pictures/triangle.png" alt="order" class="orderConnection defaultconnectionorder" data-orderBy="#host"></img></div></div>
+		<div id='host' class='td terminalTable'>
+			<p class='terminal firstRow' data-terminalid='firstrow' data-terminalname='firstrow' data-terminalip='firstrow' data-connectedto='firstrow' data-connectionstate='firstrow' data-terminallabel='firstrow' data-connectedtolabel='firstrow'>
+				<span>state</span>
+				<span><span class="titlerow" data-filterBy="data-terminalname" data-rowtitle="name" style="display:inline-block;">name</span><img src="/pictures/triangle.png" alt="order" class="orderTerminals" data-orderBy="data-terminalname" data-orderinverse="false"></img></span>
+				<span><span class="titlerow" data-filterBy="data-terminallabel" data-rowtitle="label" style="display:inline-block;">label</span><img src="/pictures/triangle.png" alt="order" class="orderTerminals" data-orderBy="data-terminalLabel" data-orderinverse="false"></img></span>
+				<span><span class="titlerow" data-filterBy="data-terminalip" data-rowtitle="ip" style="display:inline-block;">ip</span><img src="/pictures/triangle.png" alt="order" class="orderTerminals" data-orderBy="data-terminalIp" data-orderinverse="false"></img></span>
+				<span><span class="titlerow" data-filterBy="data-connectedtolabel" data-rowtitle="connected to" style="display:inline-block;">connected to</span><img src="/pictures/triangle.png" alt="order" class="orderTerminals" data-orderBy="data-connectedtolabel" data-orderinverse="false"></img></span>
+				<span></span>
+			</p>
+			{% for terminal in hosts %}
+	        		<p class='host terminal' data-terminalid='{{ terminal.id }}' data-terminalname='{{ terminal.name }}' data-terminalip='{{ terminal.ip }}' data-connectedto='{{ terminal.connectedTo }}' data-connectionState='{{ terminal.connectionState }}' data-terminallabel='{{ terminal.label }}' data-connectedtolabel='{{ terminal.connectedToLabel }}'>
+					<span class="connectionState">
+                                                {% if terminal.ping == 'true' %}
+                                                        {% if terminal.logged == 'logged' %}
+                                                                {% if terminal.connectionState == 'connected' %}
+                                                                        <span class="dot connected"></span>
+                                                                {% else %}
+                                                                        <span class="dot free"></span>
+								{% endif %}
+                                                        {% else %}
+                                                                <span class="dot notlogged"></span>
+							{% endif %}
+                                                {% else %}
+                                                        <span class="dot disconnected"></span>
+                                                {% endif %}
+                                        </span>
+					<span>{{ terminal.name |trim('mikros.int') }}</span>
+					<span>{{ terminal.label }}</span>
+					<span>{{ terminal.ip }}</span>
+					<span>{{ terminal.connectedToLabel |trim('mikros.int') }}</span>
+					<span>
+						<a href='{{ path('terminal_operate', {id: terminal.id}) }}'>operate</a>
+					</span>
+				</p>
+			{% else %}
+        			<p><span>No hosts</span></p>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% for terminal in clients %}
+	<div class="line" id="line-{{ terminal.id }}"></div>
+{% endfor %}
+	<table id='log' data-empty><tr><td>Log empty</td></tr></table>
+	</div>
+{% endblock %}
+
+
+{% block javascripts %}
+        {{ parent() }}
+
+	<script src="{{ asset('js/pcoipconsole.js') }}"></script>
+{% endblock %}

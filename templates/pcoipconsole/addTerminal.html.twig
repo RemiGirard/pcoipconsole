@@ -1,0 +1,14 @@
+{% extends 'pcoipconsole/home.html.twig' %}
+
+
+{% block body %}
+{% include 'pcoipconsole/topbar.html.twig' with {'title': 'new terminal'} %}
+
+    <div>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+	<input type="submit" value="Send" class="btn btn-success"/>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

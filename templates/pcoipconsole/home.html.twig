@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    	{{ parent() }}
+
+    	<link href="{{ asset('css/pcoipconsole.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('css/topbar.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
+{% block title %}pcoipconsole{% endblock %}
+
+{% block body %}
+	{% include 'pcoipconsole/topbar.html.twig' with {'title': ''} %}
+
+<div id=homeAuthentification>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		<a href='{{ path('terminal_list') }}'>Pcoip</br>list & link</a>
+        {% else %}
+        	<a href='{{ path('app_login') }}'>Login</a>
+		<a href='{{ path('app_register') }}'>Register</a>
+        {% endif %}
+
+</div>
+
+{% endblock %}

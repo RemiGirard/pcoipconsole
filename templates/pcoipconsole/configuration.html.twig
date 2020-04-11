@@ -1,0 +1,32 @@
+{% extends 'pcoipconsole/home.html.twig' %}
+
+
+
+
+{% block stylesheets %}
+        {{ parent() }}
+	
+	<link href="{{ asset('css/list.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/configuration.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}Configuration{% endblock %}
+
+{% block body %}
+
+	{% include 'pcoipconsole/topbar.html.twig' with {'title': 'List & link'} %}
+
+	<a class='noselect configurationbutton' href="/terminal/infoupdate/true" style="text-decoration: none;">Update all info</div>	
+	<a class='noselect configurationbutton' href="/terminal/infoupdate/false" style="text-decoration: none;">Update connection info</div>	
+
+	<a class='noselect configurationbutton' href="{{ path('terminal_create') }}" style="text-decoration: none;">Create terminal</a>
+
+{% endblock %}
+
+
+{% block javascripts %}
+        {{ parent() }}
+
+        <script src="{{ asset('js/configuration.js') }}"></script>
+{% endblock %}
+

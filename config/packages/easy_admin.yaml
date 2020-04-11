@@ -1,0 +1,13 @@
+easy_admin:
+    user:
+            name_property_path: 'username'
+    entities:
+#        # List the entity class name you want to manage
+        Terminal:
+                class: App\Entity\Terminal
+        User:
+                class: App\Entity\User
+                list:
+                        fields: ['id', 'username', 'roles']
+                form:
+                        fields: ['id', 'username', 'roles']

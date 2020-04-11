@@ -1,0 +1,62 @@
+{% extends 'pcoipconsole/home.html.twig' %}
+
+{% block title %}pcoipconsole - List terminal{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+        <link href="{{ asset('css/operate.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/Chart.min.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block body %}
+{% include 'pcoipconsole/topbar.html.twig' with {'title': 'Operate'} %}
+<div style="display:inline-block; vertical-align:text-top;">		
+	<p>id: {{ terminal.id }}</p>
+	<p>name: <span id='nameField'>{{ terminal.name }}</span></p>
+	<p>label: <span id='labelField'>{{ terminal.label }}</p>
+	<p>ip: <span id='ipField'>{{ terminal.ip }}</p>
+	<p>role: <span id='roleField'>{{ terminal.role }}</span></p>
+	<p>Connected to:<span id='connectedToField'>{{ terminal.connectedTo }}</span></p>
+	<p>Connected to label: <span id='connectedToLabel'>{{ terminal.connectedToLabel }}</span><p>
+	<p>Connection state: <span id='connectionStateField'>{{ terminal.connectionState }}</span><p>
+	<p>Ping: <span id='pingField'>{{ terminal.ping }}</span></p>
+	<p>Logged: <span id='loggedField'>{{ terminal.logged }}</span></p>
+	<p>Web interface: <a target="_blank" rel="noopener noreferrer" href="https://{{ terminal.ip }}">https://{{ terminal.ip }}</a></p>
+	
+	<span class='operation noselect' id='init' data-fieldOutput='#logged'>Init</span>
+	<span class='operation noselect' id='connect'>Connect</span>
+	<span class='operation noselect' id='disconnect'>Disconnect</span>
+	{% if terminal.role == 'client' %}
+		<span class='operation noselect' id='reboot'>Reboot</span>
+	{% endif %}
+	</br>
+	<span class='operation noselect' id='ping' data-fieldOutput='#pingField'>ping</span>
+	<span class='operation noselect' id='getName' data-fieldOutput='#nameField'>Get name</span>
+	<span class='operation noselect' id='getLabel' data-fieldOutput='#labelField'>Get label</span>
+	<span class='operation noselect' id='getIp' data-fieldOutput='#ipField'>Get IP</span>
+	<span class='operation noselect' id='getConnectedTo' data-fieldOutput='#connectedToField'>Get connected to</span>
+	<span class='operation noselect' id='getConnectionState' data-fieldOutput='#connectionStateField'>Get connection state</span>
+	</br>
+	<span class='getinfo noselect' id='updateInfoFromIp'>Update info from Ip</span>
+	<span class='getinfo noselect' id='updateIpFromHostname'>Update ip from hostname</span>
+	<span class='getinfo noselect' id='getBitRate'>Watch bitrate</span>
+	</br>
+	<span class='noselect changeManually' id=editTerminal><a href="{{ path('terminal_edit', { 'id': terminal.id }) }}">Edit this terminal</a></span>
+	<span class='noselect changeManually delete' id=deleteTerminal><a href="{{ path('terminal_delete', { 'id': terminal.id }) }}">DELETE this terminal</a></span>
+</div>
+
+<div style="width:600px;height:400px;display:inline-block; vertical-align:text-top;">
+	<canvas id="myChart" width="60" height="40"></canvas>
+</div>
+
+<table id='log' data-empty><tr><td>Log empty</td></tr></table>
+
+{% endblock %}
+
+{% block javascripts %}
+        {{ parent() }}
+
+        <script src="{{ asset('js/pcoipconsole.js') }}"></script>
+        <script src="{{ asset('js/chart.js/dist/Chart.js') }}"></script>
+        <script src="{{ asset('js/bitrateChart.js') }}"></script>
+{% endblock %}

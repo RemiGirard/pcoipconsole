@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+        {{ parent() }}
+
+        <link href="{{ asset('css/pcoipconsole.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/topbar.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/home.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+	{% include 'pcoipconsole/topbar.html.twig' with {'title': 'Register'} %}
+
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.username) }}
+        {{ form_row(registrationForm.plainPassword) }}
+
+        <button class="btn">Register</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

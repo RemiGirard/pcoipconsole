@@ -1,0 +1,28 @@
+
+
+.operation, .getinfo, .changeManually {
+	background-color: #444;
+	display: inline-block;
+	vertical-align: text-top;
+	padding: 20px;
+	margin-bottom: 5px;
+}
+
+.changeManually a {
+	text-decoration: none;
+	color: white;
+}
+
+.delete {
+	background-color: red;
+	color: black;
+}
+
+.operation:hover, .getinfo:hover, .changeManually:hover {
+	background-color: #bbb;
+	color: black;
+}
+
+.delete:hover {
+        background-color:#522;
+}

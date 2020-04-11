@@ -1,0 +1,17 @@
+<div id=topbar>
+	<a href='{{ path('home') }}'>Home</a>
+	<a href='{{ path('terminal_list') }}'>PCoIP</a>
+	<span>{{ title }}</span>
+	{% block additionalLink %}
+	{% endblock %}
+	<div class=authentification>
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		        <span>Username: {{ app.user.username }}</span>
+		        <a href='{{ path('app_logout') }}'>Logout</a>
+		{% else %}
+		        <a href='{{ path('app_login') }}'>Login</a>
+		{% endif %}
+	
+		<a href='{{ path('app_register') }}'>Register</a>
+	</div>
+</div>
