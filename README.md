@@ -1,5 +1,8 @@
 # pcoipconsole
 
+
+![PcoipConsole Interface](pcoipconsole.png)
+
 This web app is made to get information and change configuration of Teradici terminals.
 
 It's built with [Symfony 4.3](https://symfony.com/) web framework.
